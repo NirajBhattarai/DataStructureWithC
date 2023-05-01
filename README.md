@@ -4,15 +4,15 @@ This repository is designed to provide an overview of data structures and their 
 
 
 ## Table of Contents
-. Introduction to C Programming
-. Arrays
-. Linked Lists
-. Stacks
-. Queues
-. Trees
-. Graphs
-. Sorting Algorithms
-. Searching Algorithms
+1. Introduction to C Programming
+2. Arrays
+3. Linked Lists
+4. Stacks
+5. Queues
+6. Trees
+7. Graphs
+8. Sorting Algorithms
+9. Searching Algorithms
 
 ## Introduction to C Programming
 In this section, you will learn the basics of the C programming language, including variables, control structures, functions, and pointers.
