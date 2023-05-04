@@ -21,5 +21,7 @@ printf(”c : %.2f”,c);
 				(float) (x + y/2)
 
            float pi;
-```pi=(float)22/7;       // explicit type conversion
- 	printf(“pi : %.2f”,pi);
+           pi=(float)22/7;       // explicit type conversion
+ 	       printf(“pi : %.2f”,pi);
+
+           
