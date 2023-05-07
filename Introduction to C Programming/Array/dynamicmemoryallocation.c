@@ -19,6 +19,7 @@ int main() {
 
     printf("Enter %d integers:\n", n);
 
+    
     // Reading and storing the integers in the dynamic array
     for (int i = 0; i < n; i++) {
         scanf("%d", numbers[i]);
