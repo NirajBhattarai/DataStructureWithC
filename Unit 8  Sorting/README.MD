@@ -120,3 +120,59 @@ int main() {
     return 0;
 }
 ```
+## Selection Sort
+
+The selection sort algorithm divides the input array into two parts: the sorted part and the unsorted part. The sorted part is initially empty, and the unsorted part contains all the elements. The algorithm repeatedly selects the smallest (or largest, depending on the order) element from the unsorted part and swaps it with the first element of the unsorted part, thereby expanding the sorted part by one element. This process continues until the entire array is sorted.
+
+In the implementation above, the selectionSort function takes an array arr and its length n as input. It uses two nested loops to find the minimum element in the unsorted part of the array and swaps it with the current element. The outer loop iterates through the array from the first element to the second-to-last element, while the inner loop searches for the minimum element starting from the next element. After each iteration of the outer loop, the minimum element is placed in its correct sorted position. The process is repeated until the array is completely sorted
+
+```
+#include <stdio.h>
+
+void selectionSort(int arr[], int n) {
+    int i, j, minIndex, temp;
+
+    // Iterate through the array
+    for (i = 0; i < n - 1; i++) {
+        minIndex = i; // Assume the current index contains the minimum value
+
+        // Find the minimum element in the remaining unsorted part of the array
+        for (j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        // Swap the minimum element with the current element
+        if (minIndex != i) {
+            temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
+    }
+}
+
+int main() {
+    int arr[] = {64, 25, 12, 22, 11};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int i;
+
+    printf("Original array: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    selectionSort(arr, n);
+
+    printf("Sorted array: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+
+```
