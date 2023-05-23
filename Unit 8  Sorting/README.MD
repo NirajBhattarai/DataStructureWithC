@@ -122,57 +122,61 @@ int main() {
 ```
 ## Selection Sort
 
-The selection sort algorithm divides the input array into two parts: the sorted part and the unsorted part. The sorted part is initially empty, and the unsorted part contains all the elements. The algorithm repeatedly selects the smallest (or largest, depending on the order) element from the unsorted part and swaps it with the first element of the unsorted part, thereby expanding the sorted part by one element. This process continues until the entire array is sorted.
+Insertion sort is a simple sorting algorithm that works by building up a sorted section at the beginning of the data set. It begins the sorted section with the first element. Then, it inspects the next element and swaps it backwards into the sorted section until it is in sorted order. It continues iterating through the list and swapping new items backwards into the sorted section until it reaches the end. This algorithm is a simple way to sort a small set of elements.
 
-In the implementation above, the selectionSort function takes an array arr and its length n as input. It uses two nested loops to find the minimum element in the unsorted part of the array and swaps it with the current element. The outer loop iterates through the array from the first element to the second-to-last element, while the inner loop searches for the minimum element starting from the next element. After each iteration of the outer loop, the minimum element is placed in its correct sorted position. The process is repeated until the array is completely sorted
+## Complexity
+
+The complexity of Insertion Sort can be broken down as:
+
+Best Case Scenario: O(n) - This is the scenario when the input is already sorted.
+Average Case Scenario: O(n^2)
+Worst Case Scenario: O(n^2) - This is the scenario when the input is sorted in reverse order.
+
 
 ```
 #include <stdio.h>
 
-void selectionSort(int arr[], int n) {
-    int i, j, minIndex, temp;
+#include <stdio.h>
 
-    // Iterate through the array
-    for (i = 0; i < n - 1; i++) {
-        minIndex = i; // Assume the current index contains the minimum value
+void insertionSort(int arr[], int n) {
+   int i, key, j;
+   for (i = 1; i < n; i++) {
+       key = arr[i];
+       j = i - 1;
+ 
+       /* Move elements of arr[0..i-1], that are
+          greater than key, to one position ahead
+          of their current position */
+       while (j >= 0 && arr[j] > key) {
+           arr[j + 1] = arr[j];
+           j = j - 1;
+       }
+       arr[j + 1] = key;
+   }
+}
 
-        // Find the minimum element in the remaining unsorted part of the array
-        for (j = i + 1; j < n; j++) {
-            if (arr[j] < arr[minIndex]) {
-                minIndex = j;
-            }
-        }
-
-        // Swap the minimum element with the current element
-        if (minIndex != i) {
-            temp = arr[i];
-            arr[i] = arr[minIndex];
-            arr[minIndex] = temp;
-        }
-    }
+void printArray(int arr[], int n) {
+   int i;
+   for (i = 0; i < n; i++)
+       printf("%d ", arr[i]);
+   printf("\n");
 }
 
 int main() {
-    int arr[] = {64, 25, 12, 22, 11};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int i;
+   int arr[] = {12, 11, 13, 5, 6};
+   int n = sizeof(arr) / sizeof(arr[0]);
 
-    printf("Original array: ");
-    for (i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
+   printf("Original array: \n");
+   printArray(arr, n);
 
-    selectionSort(arr, n);
+   insertionSort(arr, n);
+   
+   printf("\nSorted array: \n");
+   printArray(arr, n);
 
-    printf("Sorted array: ");
-    for (i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-
-    return 0;
+   return 0;
 }
+
 
 
 ```
