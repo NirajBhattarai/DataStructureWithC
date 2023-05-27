@@ -123,3 +123,24 @@ int main(){
     return 0;
 }
 ```
+
+
+## Natural Number N with Recursion
+
+```
+
+#include<stdio.h>
+
+void print_natural(int n){
+    if(n > 0){
+        print_natural(n - 1);
+        printf("%d\n", n);
+    }
+}
+
+int main() {
+    int n = 10; // replace this with your number
+    print_natural(n);
+    return 0;
+}
+```
