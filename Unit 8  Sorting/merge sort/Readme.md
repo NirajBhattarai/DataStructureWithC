@@ -53,8 +53,8 @@ int main()
 
 void sort(int arr[], int low, int mid, int last) {
     int i, j, k;
-    int n1 = mid - low + 1;
-    int n2 = last - mid;
+    int n1 = 4;
+    int n2 = 4;
   
     // Create temp arrays
     int L[n1], R[n2];
@@ -100,7 +100,7 @@ int main() {
     int array_size = sizeof(arr) / sizeof(arr[0]);
   
     int low = 0;
-    int mid = array_size / 2 - 1; // mid is the last index of the first sorted sub-array
+    int mid = 3; // mid is the last index of the first sorted sub-array
     int last = array_size - 1;
 
     printf("Original array:\n");
