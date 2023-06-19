@@ -117,3 +117,79 @@ int main() {
     return 0;
 }
 ```
+
+Merge Array Half Sorted
+
+```
+// Online C compiler to run C program online
+#include <stdio.h>
+
+void sort(int arr[],int low,int mid,int last)
+{
+    int i,j,k;
+    int n1 =4;
+    int n2 =4;
+    
+    // temp Array
+    int left[n1];
+    int right[n2];
+    
+    for(i =0;i<n1;i++)
+    {
+        left[i]= arr[i];
+    }
+    for(j =0;j<n2;k++)
+    {
+        right[j]= arr[mid+1+j];
+    }
+    
+    // reset i j k to intial value
+     i =0;
+     j=0;
+     k =0;
+     while (i < n1 && j < n2) {
+        if (left[i] <= right[j]) {
+            arr[k++] = left[i++];
+            i++;
+        } else {
+            arr[k++] = right[j++];
+        }
+    }
+    
+     // Copy the remaining elements of L[], if there are any
+    while (i < n1) {
+        arr[k++] = left[i++];
+    }
+  
+    // Copy the remaining elements of R[], if there are any
+    while (j < n2) {
+        arr[k++] = right[j++];
+    }
+     
+    
+}
+
+int main() {
+    int arr[] = {1,3,5,7,2,4,6,8};
+    
+    int low =0;
+    int mid = 3;
+    int last = 7;
+    
+    printf("Original Array:\n");
+    for(int i =0;i<8;i++)
+    {
+        printf("%d ",arr[i]);
+    }
+    printf("\n");
+    
+    sort(arr,low,mid,last);
+    
+    printf("Array after merging:\n");
+    for (int i = 0; i < 4; i++)
+        printf("%d ", arr[i]);
+
+    return 0;
+}
+
+```
