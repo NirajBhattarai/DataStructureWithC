@@ -399,3 +399,135 @@ Iteration 4: Merge the remaining sublists:
 [3, 9, 10, 27, 38, 43, 82]
 
 At the end of this process, we have a fully sorted array.
+
+
+## Merge Sort Algorithm
+
+Merge sort is an efficient, stable sorting algorithm that operates on the principle of divide and conquer. It repeatedly breaks down an array into several sub-arrays until each sub-array contains a single element, and then merges those sub-arrays in a manner that results in a sorted array.
+
+## How It Works
+
+The algorithm mainly involves the following steps:
+
+1. Divide: The array is divided into two halves.
+
+2. Conquer: Recursively sort the two halves of the array.
+
+3. Combine: Merge the two sorted halves into a sorted whole.
+
+The recursive nature of merge sort makes it an effective sorting algorithm for handling large datasets.
+
+## Complexity
+### Time complexity:
+
+1. Worst-case scenario: O(n log n)
+2. Best-case scenario: O(n log n)
+3. Average case: O(n log n)
+
+## Space complexity:
+
+Worst-case scenario: O(n)
+
+## Implementation
+This section outlines the pseudocode for a basic implementation of the merge sort algorithm:
+
+pseudocode 
+
+```
+function mergeSort(array)
+    if length(array) <= 1 
+        return array
+    else
+        mid = length(array) / 2
+        left = mergeSort(array[0...mid-1])
+        right = mergeSort(array[mid...end])
+        return merge(left, right)
+
+function merge(left, right)
+    result = []
+    while length(left) > 0 and length(right) > 0
+        if left[0] <= right[0]
+            append left[0] to result
+            remove first element from left
+        else
+            append right[0] to result
+            remove first element from right
+    if length(left) > 0
+        append remaining elements of left to result
+    if length(right) > 0
+        append remaining elements of right to result
+    return result
+```
+```
+#include <stdio.h>
+
+void merge(int arr[], int l, int m, int r) {
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+
+    int L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = l;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        }
+        else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int arr[], int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
+    }
+}
+
+void printArray(int arr[], int size) {
+    int i;
+    for (i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {4, 7, 2, 5, 1, 9, 8, 6, 3};
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Given array is \n");
+    printArray(arr, arr_size);
+
+    mergeSort(arr, 0, arr_size - 1);
+
+    printf("\nSorted array is \n");
+    printArray(arr, arr_size);
+    return 0;
+}
+```
