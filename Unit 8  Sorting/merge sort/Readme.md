@@ -297,9 +297,7 @@ int main() {
 ## Program in Java
 
 ```
-import java.util.Arrays;
-
-public class IterativeMergeSort {
+public class MergeSort {
     void merge(int arr[], int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
@@ -340,30 +338,41 @@ public class IterativeMergeSort {
     }
 
     void mergeSort(int arr[], int n) {
-        for (int curr_size = 1; curr_size <= n - 1; curr_size = 2 * curr_size) {
-            for (int left_start = 0; left_start < n - 1; left_start += 2 * curr_size) {
-                int mid = Math.min(left_start + curr_size - 1, n - 1);
-                int right_end = Math.min(left_start + 2 * curr_size - 1, n - 1);
-
-                merge(arr, left_start, mid, right_end);
+        int p;
+        for (p = 2; p <= n; p = p * 2) {
+            for (int i = 0; i + p - 1 < n; i = i + p) {
+                int low = i;
+                int high = i + p - 1;
+                int mid = (low + high) / 2;
+                merge(arr, low, mid, high);
             }
+        }
+        if (p / 2 < n) {
+            merge(arr, 0, p / 2 - 1, n - 1);
         }
     }
 
-    public static void main(String[] args) {
-        int arr[] = { 12, 11, 13, 5, 6, 7 };
+    static void printArray(int arr[]) {
         int n = arr.length;
+        for (int i = 0; i < n; ++i)
+            System.out.print(arr[i] + " ");
+        System.out.println();
+    }
 
-        System.out.println("Given array is");
-        System.out.println(Arrays.toString(arr));
+    public static void main(String args[]) {
+        int arr[] = {12, 11, 13, 5, 6, 7};
 
-        IterativeMergeSort ob = new IterativeMergeSort();
-        ob.mergeSort(arr, n);
+        System.out.println("Given Array");
+        printArray(arr);
 
-        System.out.println("\nSorted array is");
-        System.out.println(Arrays.toString(arr));
+        MergeSort ob = new MergeSort();
+        ob.mergeSort(arr, arr.length);
+
+        System.out.println("\nSorted array");
+        printArray(arr);
     }
 }
+
 ```
 ## Example 
 
