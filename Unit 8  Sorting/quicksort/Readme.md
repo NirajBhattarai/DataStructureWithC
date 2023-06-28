@@ -20,85 +20,162 @@ Despite the worst-case scenario being O(n^2), in practice, QuickSort is typicall
 Programs
 
 ```
+// C code to implement quicksort
+
 #include <stdio.h>
 
-void swap(int* a, int* b) {
-    int t = *a;
-    *a = *b;
-    *b = t;
+// Function to swap two elements
+void swap(int* a, int* b)
+{
+	int t = *a;
+	*a = *b;
+	*b = t;
 }
 
-int partition(int arr[], int low, int high) {
-    int pivot = arr[high];  
-    int i = (low - 1); 
-  
-    for (int j = low; j <= high - 1; j++) {
-        if (arr[j] < pivot) {
-            i++; 
-            swap(&arr[i], &arr[j]);
-        }
-    }
-    swap(&arr[i + 1], &arr[high]);
-    return (i + 1);
+// Partition the array using the last element as the pivot
+int partition(int arr[], int low, int high)
+{
+	// Choosing the pivot
+	int pivot = arr[high];
+
+	// Index of smaller element and indicates
+	// the right position of pivot found so far
+	int i = (low - 1);
+
+	for (int j = low; j <= high - 1; j++) {
+
+		// If current element is smaller than the pivot
+		if (arr[j] < pivot) {
+
+			// Increment index of smaller element
+			i++;
+			swap(&arr[i], &arr[j]);
+		}
+	}
+	swap(&arr[i + 1], &arr[high]);
+	return (i + 1);
 }
 
-void quickSort(int arr[], int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);
- 
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
+// The main function that implements QuickSort
+// arr[] --> Array to be sorted,
+// low --> Starting index,
+// high --> Ending index
+void quickSort(int arr[], int low, int high)
+{
+	if (low < high) {
+
+		// pi is partitioning index, arr[p]
+		// is now at right place
+		int pi = partition(arr, low, high);
+
+		// Separately sort elements before
+		// partition and after partition
+		quickSort(arr, low, pi - 1);
+		quickSort(arr, pi + 1, high);
+	}
 }
 
-int main() {
-    int arr[] = {10, 7, 8, 9, 1, 5};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    quickSort(arr, 0, n - 1);
-    printf("Sorted array: \n");
-    for (int i = 0; i < n; i++)
-        printf("%d ", arr[i]);
-    return 0;
+// Driver code
+int main()
+{
+	int arr[] = { 10, 7, 8, 9, 1, 5 };
+	int N = sizeof(arr) / sizeof(arr[0]);
+
+	// Function call
+	quickSort(arr, 0, N - 1);
+	printf("Sorted array: \n");
+	for (int i = 0; i < N; i++)
+		printf("%d ", arr[i]);
+	return 0;
 }
+
+
 ```
 
 ```
+// Java implementation of QuickSort
+import java.io.*;
+
 class QuickSort {
-    int partition(int arr[], int low, int high) {
-        int pivot = arr[high]; 
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
-            if (arr[j] < pivot) {
-                i++;
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
-        return i + 1;
-    }
 
-    void quickSort(int arr[], int low, int high) {
-        if (low < high) {
-            int pi = partition(arr, low, high);
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
-        }
-    }
+	// A utility function to swap two elements
+	static void swap(int[] arr, int i, int j)
+	{
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
 
-    public static void main(String args[]) {
-        int arr[] = {10, 7, 8, 9, 1, 5};
-        int n = arr.length;
-        QuickSort qs = new QuickSort();
-        qs.quickSort(arr, 0, n - 1);
-        System.out.println("Sorted array");
-        for (int i = 0; i < n; ++i)
-            System.out.print(arr[i] + " ");
-    }
+	// This function takes last element as pivot,
+	// places the pivot element at its correct position
+	// in sorted array, and places all smaller to left
+	// of pivot and all greater elements to right of pivot
+	static int partition(int[] arr, int low, int high)
+	{
+		// Choosing the pivot
+		int pivot = arr[high];
+
+		// Index of smaller element and indicates
+		// the right position of pivot found so far
+		int i = (low - 1);
+
+		for (int j = low; j <= high - 1; j++) {
+
+			// If current element is smaller than the pivot
+			if (arr[j] < pivot) {
+
+				// Increment index of smaller element
+				i++;
+				swap(arr, i, j);
+			}
+		}
+		swap(arr, i + 1, high);
+		return (i + 1);
+	}
+
+	// The main function that implements QuickSort
+	// arr[] --> Array to be sorted,
+	// low --> Starting index,
+	// high --> Ending index
+	static void quickSort(int[] arr, int low, int high)
+	{
+		if (low < high) {
+
+			// pi is partitioning index, arr[p]
+			// is now at right place
+			int pi = partition(arr, low, high);
+
+			// Separately sort elements before
+			// partition and after partition
+			quickSort(arr, low, pi - 1);
+			quickSort(arr, pi + 1, high);
+		}
+	}
+	// To print sorted array
+	public static void printArr(int[] arr)
+	{
+		for (int i = 0; i < arr.length; i++) {
+			System.out.print(arr[i] + " ");
+		}
+	}
+
+	// Driver Code
+	public static void main(String[] args)
+	{
+		int[] arr = { 10, 7, 8, 9, 1, 5 };
+		int N = arr.length;
+
+		// Function call
+		quickSort(arr, 0, N - 1);
+		System.out.println("Sorted array:");
+		printArr(arr);
+	}
 }
+
+// This code is contributed by Ayush Choudhary
+// Improved by Ajay Virmoti
+
+
 
 ```
 
