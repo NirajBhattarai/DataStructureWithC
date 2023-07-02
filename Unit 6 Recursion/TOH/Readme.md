@@ -11,19 +11,20 @@ Program
 ```
 #include <stdio.h>
 
-void TowerOfHanoi(int n, char from_rod, char to_rod, char aux_rod) {
-    if (n == 1) {
-        printf("\n Move disk 1 from rod %c to rod %c", from_rod, to_rod);
-        return;
-    }
-    TowerOfHanoi(n-1, from_rod, aux_rod, to_rod);
-    printf("\n Move disk %d from rod %c to rod %c", n, from_rod, to_rod);
-    TowerOfHanoi(n-1, aux_rod, to_rod, from_rod);
+void TowerOfHanoi(int n, int A, int B, int C) {
+ 
+ if(n>0)
+ {
+    TowerOfHanoi(n-1,A,C,B);
+    printf("(%d,%d)\n",A,C);
+    TowerOfHanoi(n-1,B,A,C);
+ }
+
 }
 
 int main() {
     int n = 3; // Number of disks
-    TowerOfHanoi(n, 'A', 'C', 'B');  // A, B and C are names of rods
+    TowerOfHanoi(n, 1, 2, 3);
     return 0;
 }
 ```
