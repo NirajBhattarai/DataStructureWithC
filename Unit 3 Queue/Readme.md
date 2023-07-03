@@ -176,3 +176,74 @@ int main() {
     return 0;
 }
 ```
+
+In Java Language Also 
+
+```
+
+public class CircularQueue {
+	static int size = 5;
+	static int front = -1;
+	static int rear = -1;
+	static int[] queues = new int[size];
+
+	static boolean isFull() {
+		if (front == 0 && rear == size - 1) {
+			return true;
+		}
+		if (front == rear + 1)
+			return true;
+		return false;
+	}
+
+	static boolean isEmpty() {
+		if (front == -1)
+			return true;
+		return false;
+	}
+
+	static void enqueue(int data) {
+		if (isFull()) {
+			System.out.print("queue full");
+			return;
+		} else {
+			if (front == -1)
+				front = 0;
+			rear = (rear + 1) % size;
+			queues[rear] = data;
+			System.out.println("Inserted " + data);
+
+		}
+
+	}
+
+	static int deQueue() {
+		int element;
+		if (isEmpty()) {
+			System.out.println("Queue is Empty");
+			return -1;
+		} else {
+			element = queues[front];
+			if (front == rear) {
+				front = -1;
+				rear = -1;
+			} else {
+				front = (front + 1) % size;
+			}
+		}
+		return element;
+
+	}
+
+	public static void main(String[] args) {
+		enqueue(1);
+		enqueue(2);
+		enqueue(3);
+		System.out.println(deQueue());
+		enqueue(4);
+		enqueue(5);
+		enqueue(1);
+	}
+
+}
+```
