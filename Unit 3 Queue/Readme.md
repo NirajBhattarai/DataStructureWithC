@@ -247,3 +247,65 @@ public class CircularQueue {
 
 }
 ```
+
+## Priority Queue
+
+This PriorityQueue class is a simple data structure that holds elements each with a certain priority. The priority of the elements in a PriorityQueue determines the order in which elements are served (i.e., deleted). The element with the highest priority is served before the element with the lowest priority. If elements with equal priorities occur, they are served according to their order in the queue.
+
+```
+
+#include <stdio.h>
+
+#define MAX_SIZE 100
+
+int heap[MAX_SIZE];
+int heapSize = 0;
+
+// Function to swap elements
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Function to insert element into the heap
+void insert(int val) {
+    if (heapSize >= MAX_SIZE) {
+        printf("\nOverflow: Could not insertKey\n");
+        return;
+    }
+
+    // First insert the new key at the end
+    heapSize++;
+    int i = heapSize - 1;
+    heap[i] = val;
+
+    // Fix the max heap property if it is violated
+    while (i != 0 && heap[(i - 1) / 2] < heap[i]) {
+        swap(&heap[i], &heap[(i - 1) / 2]);
+        i = (i - 1) / 2;
+    }
+}
+
+// Function to display the heap
+void displayHeap() {
+    for(int i = 0; i < heapSize; ++i)
+        printf("%d ", heap[i]);
+    printf("\n");
+}
+
+// Main function
+int main() {
+    insert(3);
+    insert(2);
+    insert(15);
+    insert(5);
+    insert(4);
+    insert(45);
+
+    printf("Heap array is ");
+    displayHeap();
+
+    return 0;
+}
+```
