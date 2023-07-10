@@ -256,56 +256,154 @@ This PriorityQueue class is a simple data structure that holds elements each wit
 
 #include <stdio.h>
 
-#define MAX_SIZE 100
-
-int heap[MAX_SIZE];
+#define SIZE 10
+int heap[SIZE];
 int heapSize = 0;
 
-// Function to swap elements
-void swap(int *a, int *b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-// Function to insert element into the heap
-void insert(int val) {
-    if (heapSize >= MAX_SIZE) {
-        printf("\nOverflow: Could not insertKey\n");
+void insert(int data) {
+    if (heapSize == SIZE) {
+        printf("Heap is full\n");
         return;
-    }
-
-    // First insert the new key at the end
-    heapSize++;
-    int i = heapSize - 1;
-    heap[i] = val;
-
-    // Fix the max heap property if it is violated
-    while (i != 0 && heap[(i - 1) / 2] < heap[i]) {
-        swap(&heap[i], &heap[(i - 1) / 2]);
-        i = (i - 1) / 2;
+    } else {
+        heapSize++;
+        int i = heapSize - 1;
+        heap[i] = data;
+        while (i != 0 && heap[i] > heap[(i - 1) / 2]) {
+            int temp = heap[i];
+            heap[i] = heap[(i - 1) / 2];
+            heap[(i - 1) / 2] = temp;
+            i = (i - 1) / 2;
+        }
     }
 }
 
-// Function to display the heap
-void displayHeap() {
-    for(int i = 0; i < heapSize; ++i)
-        printf("%d ", heap[i]);
-    printf("\n");
+int delete() {
+    if(heapSize == 0) {
+        printf("Heap is empty\n");
+        return -1;
+    }
+
+    int returningElement = heap[0];
+    int x = heap[heapSize - 1];
+    heapSize--;
+    heap[0] = x;
+    int i = 0;
+    int j = 2 * i + 1;
+    while (j < heapSize - 1) {
+        if (heap[j] < heap[j + 1]) {
+            j = j + 1;
+        }
+        if (heap[i] > heap[j])
+            break;
+        int temp = heap[j];
+        heap[j] = heap[i];
+        heap[i] = temp;
+        i = j;
+        j = 2 * i + 1;
+    }
+    return returningElement;
 }
 
-// Main function
+void print() {
+    for (int i = 0; i < heapSize; i++) {
+        printf("%d\n", heap[i]);
+    }
+}
+
 int main() {
-    insert(3);
-    insert(2);
-    insert(15);
-    insert(5);
-    insert(4);
+    insert(1);
+    insert(40);
     insert(45);
+    insert(50);
+    insert(5);
+    insert(6);
+    print();
 
-    printf("Heap array is ");
-    displayHeap();
+    printf("============>\n");
+    printf("%d\n", delete());
+    printf("============>\n");
+    print();
 
     return 0;
+}
+
+```
+IN Java
+
+```
+
+
+public class Heap {
+
+	static int SIZE = 10;
+	static int[] heap = new int[SIZE];
+	static int heapsize = 0;
+
+	static void insert(int data) {
+		if (heapsize == SIZE) {
+			System.out.println("Heap is full");
+			return;
+		} else {
+			heapsize++;
+			int i = heapsize - 1;
+			heap[i] = data;
+			while (i != 0 && heap[i] > heap[(i - 1) / 2]) {
+				int temp = heap[i];
+				heap[i] = heap[(i - 1) / 2];
+				heap[(i - 1) / 2] = temp;
+				i = (i - 1) / 2;
+
+			}
+
+		}
+
+	}
+
+	static int delete() throws Exception {
+
+		int returningelement = heap[0];
+		int x = heap[heapsize - 1];
+		heapsize--;
+		heap[0] = x;
+		int i = 0;
+		int j = 2 * i + 1;
+		while (j < heapsize - 1) {
+			if (heap[j] < heap[j + 1]) {
+				j = j + 1;
+			}
+			if (heap[i] > heap[j])
+				break;
+			int temp = heap[j];
+			heap[j] = heap[i];
+			heap[i] = temp;
+			i = j;
+			j = 2 * i + 1;
+		}
+		return returningelement;
+	}
+
+	static void print() {
+		for (int i = 0; i < heapsize; i++) {
+			System.out.println(heap[i]);
+		}
+
+	}
+
+	public static void main(String[] args) throws Exception {
+		insert(1);
+		insert(40);
+		insert(45);
+		insert(50);
+		insert(5);
+		insert(6);
+		print();
+		
+		System.out.println("============>");
+		System.out.println(delete());
+		System.out.println("============>");
+		print();
+
+	}
+
 }
 ```
