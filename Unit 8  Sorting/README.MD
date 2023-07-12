@@ -180,3 +180,91 @@ int main() {
 
 
 ```
+
+## Shell Sort
+
+Shell Sort is an optimization over Insertion Sort. It is named after its inventor, Donald L. Shell. Shell Sort first sorts the elements far apart from each other and successively reduces the interval between the elements to be sorted. It is a generalized version of insertion sort. In Shell Sort, we make the array h-sorted for a large value of h, and keep reducing the value of h until it becomes 1.
+
+## Algorithm:
+1. Initialize the value of h (the interval gap for comparison)
+2. Divide the list into smaller sub-list of equal interval h
+3. Sort these sub-lists using insertion sort
+4. Decrease the interval h to the smaller value and repeat the process until h is 1 (pure insertion sort is performed)
+5. At last, the list will be sorted
+
+```
+
+
+public class ShellSort {
+
+	static void shellSort(int[] data, int n) {
+		int gap;
+		for (gap = n / 2; gap >= 1; gap /= 2) {
+			for (int i = gap; i < n; i++) {
+				int temp = data[i];
+				int j = i - gap;
+				while (j >= 0 && data[j] > temp) {
+					data[j + gap] = data[j];
+					j = j - gap;
+				}
+				data[j + gap] = temp;
+
+			}
+
+		}
+	}
+
+	static void print(int[] data) {
+		System.out.println();
+		for (int i = 0; i < data.length; i++) {
+			System.out.print(data[i] + "\t");
+		}
+		System.out.println();
+	}
+
+	public static void main(String[] args) {
+		int[] array = { 12, 11, 6, 10, 13, 20, 1, 2 };
+		print(array);
+		shellSort(array, array.length);
+		System.out.println("After Sorting");
+		print(array);
+
+	}
+
+}
+```
+
+```
+#include <stdio.h>
+
+void shellSort(int data[], int n) {
+    for (int gap = n / 2; gap >= 1; gap /= 2) {
+        for (int i = gap; i < n; i++) {
+            int temp = data[i];
+            int j = i - gap;
+            while (j >= 0 && data[j] > temp) {
+                data[j + gap] = data[j];
+                j = j - gap;
+            }
+            data[j + gap] = temp;
+        }
+    }
+}
+
+void print(int data[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%d\t", data[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int array[] = { 12, 11, 6, 10, 13, 20, 1, 2 };
+    int n = sizeof(array) / sizeof(array[0]);
+    print(array, n);
+    shellSort(array, n);
+    printf("After Sorting\n");
+    print(array, n);
+    return 0;
+}
+```
