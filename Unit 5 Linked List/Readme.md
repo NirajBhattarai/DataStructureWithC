@@ -421,80 +421,86 @@ The queue operations represent a queue data structure, which is a linear data st
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define Node
 typedef struct Node {
     int data;
     struct Node* next;
 } Node;
 
-// A utility function to create a new linked list node.
-Node* newNode(int data) {
-    Node* temp = (Node*)malloc(sizeof(Node));
-    temp->data = data;
-    temp->next = NULL;
-    return temp;
+Node* front = NULL;
+Node* rear = NULL;
+
+// Function to print the queue
+void printQueue() {
+    Node* temp = front;
+    while(temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
 }
 
-// The queue, front stores the front node and rear stores the last node
-typedef struct Queue {
-    Node *front, *rear;
-} Queue;
-
-// A utility function to create an empty queue
-Queue* createQueue() {
-    Queue* q = (Queue*)malloc(sizeof(Queue));
-    q->front = q->rear = NULL;
-    return q;
-}
-
-// The function to add a data k to q
-void enqueue(Queue* q, int data) {
-    // Create a new node
-    Node* temp = newNode(data);
-
-    // If queue is empty, then new node is front and rear both
-    if (q->rear == NULL) {
-        q->front = q->rear = temp;
+// Function to enqueue an element into the queue
+void enqueue(int data) {
+    Node* newNode = (Node*) malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    
+    if(rear == NULL) {
+        front = rear = newNode;
         return;
     }
-
-    // Add the new node at the end of queue and change rear
-    q->rear->next = temp;
-    q->rear = temp;
+    
+    rear->next = newNode;
+    rear = newNode;
 }
 
-// Function to remove a key from given queue q
-Node* dequeue(Queue* q) {
-    // If queue is empty, return NULL
-    if (q->front == NULL)
-        return NULL;
+// Function to check if the queue is empty
+int isEmpty() {
+    return front == NULL;
+}
 
-    // Store previous front and move front one node ahead
-    Node* temp = q->front;
+// Function to return the front element of the queue
+int peek() {
+    if(isEmpty()) {
+        printf("Empty queue\n");
+        return -1;
+    }
+    return front->data;
+}
 
-    q->front = q->front->next;
-
-    // If front becomes NULL, then change rear also as NULL
-    if (q->front == NULL)
-        q->rear = NULL;
-    
-    return temp;
+// Function to dequeue an element from the queue
+int dequeue() {
+   if(isEmpty()){
+       printf("Empty queue\n");
+       return -1;
+   }
+   Node* tempNode = front;
+   front = front->next;
+   
+   // if front becomes NULL, then change rear also as NULL
+   if (front == NULL)
+       rear = NULL;
+   
+   int dequeuedData = tempNode->data;
+   free(tempNode);
+   return dequeuedData;
 }
 
 int main() {
-    Queue* q = createQueue();
-    enqueue(q, 10);
-    enqueue(q, 20);
-    dequeue(q);
-    enqueue(q, 30);
-    enqueue(q, 40);
-    enqueue(q, 50);
-    Node* n = dequeue(q);
-    if (n != NULL)
-        printf("Dequeued item is %d", n->data);
+    enqueue(10);
+    enqueue(11);
+    enqueue(13);
+    printQueue();  // Expected output: 10 11 13 
+
+    printf("Front Element (Peek): %d\n", peek());  // Expected output: 10
+
+    int dequeuedElement = dequeue();
+    printf("Dequeued Element: %d\n", dequeuedElement);  // Expected output: 10
+    printQueue();  // Expected output: 11 13 
 
     return 0;
 }
+
 
 ```
 
