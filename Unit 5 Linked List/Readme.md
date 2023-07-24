@@ -340,68 +340,69 @@ The stack operations represent a stack data structure, which is a linear data st
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define Node
 typedef struct Node {
     int data;
     struct Node* next;
 } Node;
 
-// Function to create a new node
-Node* newNode(int data) {
-    Node* node = (Node*)malloc(sizeof(Node));
-    if (node == NULL) {
-        printf("Heap Overflow");
-        exit(0);
+Node* head = NULL;
+
+// Function to print the stack
+void printList() {
+    Node* temp = head;
+    while(temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
     }
-    node->data = data;
-    node->next = NULL;
-    return node;
+    printf("\n");
+}
+
+// Function to push an element into the stack
+void push(int data) {
+    Node* newNode = (Node*) malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = head;
+    head = newNode;
 }
 
 // Function to check if the stack is empty
-int isEmpty(Node* root) {
-    return !root;
-}
-
-// Function to add an element to the stack
-void push(Node** root, int data) {
-    Node* node = newNode(data);
-    node->next = *root;
-    *root = node;
-    printf("%d pushed to stack\n", data);
-}
-
-// Function to remove an element from the stack
-int pop(Node** root) {
-    if (isEmpty(*root))
-        return -1;
-    Node* temp = *root;
-    *root = (*root)->next;
-    int popped = temp->data;
-    free(temp);
-
-    return popped;
+int isEmpty() {
+    return head == NULL;
 }
 
 // Function to return the top element of the stack
-int peek(Node* root) {
-    if (isEmpty(root))
+int peek() {
+    if(isEmpty()) {
+        printf("Empty stack\n");
         return -1;
-    return root->data;
+    }
+    return head->data;
+}
+
+// Function to pop an element from the stack
+int pop() {
+   if(isEmpty()){
+       printf("Empty stack\n");
+       return -1;
+   }
+   Node* tempNode = head;
+   head = tempNode->next;
+   int poppedData = tempNode->data;
+   free(tempNode);
+   return poppedData;
 }
 
 int main() {
-    Node* root = NULL;
+    push(10);
+    push(11);
+    push(13);
+    printList();  // Expected output: 13 11 10 
 
-    push(&root, 10);
-    push(&root, 20);
-    push(&root, 30);
+    printf("Top Element (Peek): %d\n", peek());  // Expected output: 13
 
-    printf("Top element is %d\n", peek(root));
-
-    printf("%d popped from stack\n", pop(&root));
-
-    printf("Top element is %d\n", peek(root));
+    int poppedElement = pop();
+    printf("Popped Element: %d\n", poppedElement);  // Expected output: 13
+    printList();  // Expected output: 11 10 
 
     return 0;
 }
