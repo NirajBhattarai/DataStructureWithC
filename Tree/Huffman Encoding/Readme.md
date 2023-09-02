@@ -59,13 +59,32 @@ Based on the dataset's character frequencies, characters are encoded with variab
                 /    \
              0 /      \
               /        \ 
-              3         \    
-            /   \        \  
-           2     \        \
-          /  \    \        \
-          B  E     K        R              
+              3         \    1
+         0  /   \        \  
+           2     \ 1      \
+        0 /  \ 1  \        \
+         B   E     K        R              
 
 
+
+
+
+The numbers represent the frequency of the combined nodes, and dashes (`-`) indicate where nodes were combined or where no node is present.
+
+## Huffman Codes
+
+| **Character** | **Huffman Code** |
+|:-------------:|:----------------:|
+|       E       |       `001`        |
+|       B       |       `000`       |
+|       K       |       `01`       |
+|       R       |       `1`       |
+
+## Encoded String
+
+Based on the tree, the encoded string for "BEEKEEPER" is:
+
+0000010010110001
 
 
 
