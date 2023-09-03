@@ -140,4 +140,4 @@ Understanding transitive closure helps in:
 
 1. Determining the reachability of vertices in a graph.
 2. Optimizing certain algorithms, especially those related to path-finding or connectivity problems.
-3. Representing the flow of information or resources within networks.
+3. Representing the flow of information or resources within networks.1
