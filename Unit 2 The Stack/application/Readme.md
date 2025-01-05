@@ -1,4 +1,45 @@
-## Show the status of stack converting following infix expression to prost fix P + Q – (R*S/T+U)-V*W
+# Infix to Postfix Conversion
+
+This document explains the algorithm to convert an infix expression to a postfix expression, also known as Reverse Polish Notation (RPN).
+
+## Algorithm Steps
+
+1. **Initialize Structures**:
+   - Use a stack to hold operators and parentheses.
+   - Use a list (or queue) to build the output postfix expression.
+
+2. **Read the Infix Expression**:
+   - Process the expression from left to right, one token at a time.
+
+3. **Token Processing**:
+   - **Operand**: Directly add operands (e.g., variables, numbers) to the output list.
+   - **Left Parenthesis `(`**: Push onto the stack to denote a subexpression.
+   - **Right Parenthesis `)`**: Pop from the stack to the output list until a left parenthesis is encountered. Discard the left parenthesis.
+   - **Operator**: 
+     - Determine the precedence of the current operator.
+     - While there is an operator at the top of the stack with greater precedence, or the operator at the top of the stack has the same precedence and is left associative, pop operators from the stack to the output list.
+     - Push the current operator onto the stack.
+
+4. **End of Expression**:
+   - After reading the entire expression, pop all remaining operators from the stack to the output list.
+
+## Operator Precedence and Associativity
+
+- **Precedence Levels** (from highest to lowest):
+  1. Parentheses `()`
+  2. Exponentiation `^`
+  3. Multiplication `*` and Division `/`
+  4. Addition `+` and Subtraction `-`
+
+- **Associativity**:
+  - **Left Associative**: `+`, `-`, `*`, `/` (evaluated from left to right)
+  - **Right Associative**: `^` (evaluated from right to left)
+
+---
+
+This guide provides a comprehensive overview of the process for converting infix expressions to postfix, ensuring the correct order of operations is maintained.
+
+## Show the status of stack converting following infix expression to post fix P + Q – (R*S/T+U)-V*W
 
 | Step | Stack | Input                               | Output                      |
 |------|-------|-------------------------------------|------------------------------|
