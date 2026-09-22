@@ -20,6 +20,36 @@ This document explains the algorithm to convert an infix expression to a postfix
      - While there is an operator at the top of the stack with greater precedence, or the operator at the top of the stack has the same precedence and is left associative, pop operators from the stack to the output list.
      - Push the current operator onto the stack.
 
+   ### Example: when to pop, and when not to
+
+   **Case 1 — stack top has higher precedence, so it pops.**
+   Infix: `A * B + C`
+
+   | Token | Why                                                    | Stack | Output    |
+   |-------|---------------------------------------------------------|-------|-----------|
+   | A     | operand → straight to output                             |       | A         |
+   | *     | stack empty → nothing to pop, push `*`                    | `*`   | A         |
+   | B     | operand → straight to output                             | `*`   | A B       |
+   | +     | top of stack is `*`, which outranks `+` → pop it first    | `+`   | A B *     |
+   | C     | operand → straight to output                             | `+`   | A B * C   |
+   | end   | flush the stack                                          |       | A B * C + |
+
+   `*` has higher precedence than `+`, so as soon as `+` shows up, the rule forces `*` off the stack before `+` can be pushed. Final postfix: `A B * C +`.
+
+   **Case 2 — stack top has lower precedence, so nothing pops.**
+   Infix: `A + B * C`
+
+   | Token | Why                                                       | Stack | Output    |
+   |-------|------------------------------------------------------------|-------|-----------|
+   | A     | operand → straight to output                                |       | A         |
+   | +     | stack empty → push `+`                                      | `+`   | A         |
+   | B     | operand → straight to output                                | `+`   | A B       |
+   | *     | top of stack is `+`, which is *lower* precedence than `*` → don't pop, just push `*` | `+ *` | A B |
+   | C     | operand → straight to output                                | `+ *` | A B C     |
+   | end   | flush the stack (`*` first, since it's on top, then `+`)     |       | A B C * + |
+
+   Here `*` outranks `+`, so the rule's condition ("stack top has *greater or equal* precedence") is false — `*` just gets pushed on top instead of forcing `+` off. Final postfix: `A B C * +`.
+
 4. **End of Expression**:
    - After reading the entire expression, pop all remaining operators from the stack to the output list.
 
