@@ -217,3 +217,33 @@ Each problem is traced one token at a time — see [../application/Readme.md](..
 | 17   | end   |           |                                | A B C - D E F ^ / * +        |
 
 **Final postfix:** `A B C - D E F ^ / * +`
+
+---
+
+## 11. Hardest — Several Operands Inside a Single Parenthesis
+
+**Infix:** `A * (B + C * D - E) / F`
+
+Only one pair of parentheses this time, but it holds four operands (`B`, `C`, `D`, `E`) and mixed-precedence operators, so the stack still has to sort out `+`, `*`, and `-` *within* that one group before the `)` lets anything escape it.
+
+| Step | Token | Stack     | Remaining Expression           | Output                |
+|------|-------|-----------|----------------------------------|-------------------------|
+| 1    | —     |           | A * ( B + C * D - E ) / F        |                          |
+| 2    | A     |           | * ( B + C * D - E ) / F          | A                        |
+| 3    | *     | *         | ( B + C * D - E ) / F            | A                        |
+| 4    | (     | * (       | B + C * D - E ) / F              | A                        |
+| 5    | B     | * (       | + C * D - E ) / F                | A B                      |
+| 6    | +     | * ( +     | C * D - E ) / F                  | A B                      |
+| 7    | C     | * ( +     | * D - E ) / F                    | A B C                    |
+| 8    | *     | * ( + *   | D - E ) / F                      | A B C                    |
+| 9    | D     | * ( + *   | - E ) / F                        | A B C D                  |
+| 10   | -     | * ( -     | E ) / F                          | A B C D * +              |
+| 11   | E     | * ( -     | ) / F                            | A B C D * + E            |
+| 12   | )     | *         | / F                               | A B C D * + E -          |
+| 13   | /     | /         | F                                 | A B C D * + E - *        |
+| 14   | F     | /         |                                   | A B C D * + E - * F      |
+| 15   | end   |           |                                   | A B C D * + E - * F /    |
+
+At step 10, `-` arrives while the stack (above the `(`) holds `+ *` — both outrank `-`, so *both* get popped (first `*`, then `+`) before `-` is pushed; the algorithm never looks past the `(` while doing this.
+
+**Final postfix:** `A B C D * + E - * F /`
