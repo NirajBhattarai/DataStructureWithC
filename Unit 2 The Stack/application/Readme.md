@@ -41,49 +41,65 @@ This guide provides a comprehensive overview of the process for converting infix
 
 ## Show the status of stack converting following infix expression to post fix P + Q – (R*S/T+U)-V*W
 
-| Step | Stack | Input                               | Output                      |
-|------|-------|-------------------------------------|------------------------------|
-| 1    |       | P + Q - (R * S / T + U) - V * W     |                              |
-| 2    | +     | Q - (R * S / T + U) - V * W         | P                            |
-| 3    | +     | - (R * S / T + U) - V * W           | P Q                          |
-| 4    | -     | (R * S / T + U) - V * W             | P Q +                        |
-| 5    | -     | R * S / T + U) - V * W              | P Q + (                      |
-| 6    | - *   | S / T + U) - V * W                  | P Q + R                      |
-| 7    | - *   | / T + U) - V * W                    | P Q + R S                    |
-| 8    | - /   | T + U) - V * W                      | P Q + R S *                  |
-| 9    | - /   | + U) - V * W                        | P Q + R S * T                |
-| 10   | - +   | U) - V * W                          | P Q + R S * T /              |
-| 11   | - +   | ) - V * W                           | P Q + R S * T / U            |
-| 12   | -     | - V * W                             | P Q + R S * T / U +          |
-| 13   | -     | V * W                               | P Q + R S * T / U + -        |
-| 14   | - *   | W                                   | P Q + R S * T / U + - V      |
-| 15   | - *   |                                     | P Q + R S * T / U + - V W    |
-| 16   | -     |                                     | P Q + R S * T / U + - V W *  |
-| 17   |       |                                     | P Q + R S * T / U + - V W * -|
+| Step | Token              | Stack | Output                          |
+|------|--------------------|-------|----------------------------------|
+| 1    | —                  |       |                                   |
+| 2    | P                  |       | P                                 |
+| 3    | +                  | +     | P                                 |
+| 4    | Q                  | +     | P Q                               |
+| 5    | -                  | -     | P Q +                             |
+| 6    | (                  | - (   | P Q +                             |
+| 7    | R                  | - (   | P Q + R                           |
+| 8    | *                  | - ( * | P Q + R                           |
+| 9    | S                  | - ( * | P Q + R S                         |
+| 10   | /                  | - ( / | P Q + R S *                       |
+| 11   | T                  | - ( / | P Q + R S * T                     |
+| 12   | +                  | - ( + | P Q + R S * T /                   |
+| 13   | U                  | - ( + | P Q + R S * T / U                 |
+| 14   | )                  | -     | P Q + R S * T / U +               |
+| 15   | -                  | -     | P Q + R S * T / U + -             |
+| 16   | V                  | -     | P Q + R S * T / U + - V           |
+| 17   | *                  | - *   | P Q + R S * T / U + - V           |
+| 18   | W                  | - *   | P Q + R S * T / U + - V W         |
+| 19   | end (flush stack)  |       | P Q + R S * T / U + - V W * -     |
+
+Final postfix: `P Q + R S * T / U + - V W * -`
+
+> Note: `(` and `)` are never written to the output — `(` is only pushed onto the stack, and `)` only triggers popping until the matching `(`, which is then discarded.
 
 ## Trace the algorithm to convert infix to postfix with following infix expression ((A + B) - C * D/E)*(H-I)*F+G and evaluate the obtained postfix expression with following values: A = 4, B = 2, C = 4, D = 3, E = 8, F = 2, G = 3, H =5, I = 1
 
-| Step | Stack   | Input                                       | Output                   |
-|------|---------|---------------------------------------------|--------------------------|
-| 1    |         | ((A + B) - C * D / E) * (H - I) * F + G      |                          |
-| 2    | (       | (A + B) - C * D / E) * (H - I) * F + G       |                          |
-| 3    | ((      | A + B) - C * D / E) * (H - I) * F + G         |                          |
-| 4    | ((+     | B) - C * D / E) * (H - I) * F + G             | A                        |
-| 5    | ((+     | ) - C * D / E) * (H - I) * F + G              | AB+                      |
-| 6    | (-      | C * D / E) * (H - I) * F + G                  |                          |
-| 7    | (-*     | D / E) * (H - I) * F + G                      | C                        |
-| 8    | (-*     | / E) * (H - I) * F + G                        | CD*                      |
-| 9    | (-/     | E) * (H - I) * F + G                          | CD*                      |
-| 10   | (-/     | ) * (H - I) * F + G                           | E                        |
-| 11   | (*      | (H - I) * F + G                               | ABCD*E/-                 |
-| 12   | ((*     | H - I) * F + G                                |                          |
-| 13   | ((-     | I) * F + G                                    | H                        |
-| 14   | ((-     | ) * F + G                                     | HI-                      |
-| 15   | (*      | * F + G                                       |                          |
-| 16   | (*      | F + G                                         | HI-*                     |
-| 17   | (*      | + G                                           | F                        |
-| 18   | +       | G                                             | ABCD*E/-HI-*F*           |
-| 19   |         |                                               | ABCD*E/-HI-*F*+G         |
+| Step | Token              | Stack | Output                              |
+|------|--------------------|-------|---------------------------------------|
+| 1    | —                  |       |                                        |
+| 2    | (                  | (     |                                        |
+| 3    | (                  | ( (   |                                        |
+| 4    | A                  | ( (   | A                                      |
+| 5    | +                  | ( ( + | A                                      |
+| 6    | B                  | ( ( + | A B                                    |
+| 7    | )                  | (     | A B +                                  |
+| 8    | -                  | ( -   | A B +                                  |
+| 9    | C                  | ( -   | A B + C                                |
+| 10   | *                  | ( - * | A B + C                                |
+| 11   | D                  | ( - * | A B + C D                              |
+| 12   | /                  | ( - / | A B + C D *                            |
+| 13   | E                  | ( - / | A B + C D * E                          |
+| 14   | )                  |       | A B + C D * E / -                      |
+| 15   | *                  | *     | A B + C D * E / -                      |
+| 16   | (                  | * (   | A B + C D * E / -                      |
+| 17   | H                  | * (   | A B + C D * E / - H                    |
+| 18   | -                  | * ( - | A B + C D * E / - H                    |
+| 19   | I                  | * ( - | A B + C D * E / - H I                  |
+| 20   | )                  | *     | A B + C D * E / - H I -                |
+| 21   | *                  | *     | A B + C D * E / - H I - *              |
+| 22   | F                  | *     | A B + C D * E / - H I - * F            |
+| 23   | +                  | +     | A B + C D * E / - H I - * F *          |
+| 24   | G                  | +     | A B + C D * E / - H I - * F * G        |
+| 25   | end (flush stack)  |       | A B + C D * E / - H I - * F * G +      |
+
+Final postfix: `A B + C D * E / - H I - * F * G +`
+
+> Note: the earlier version of this table dropped the `+` (from `A + B`) after row 6, giving the wrong final result `ABCD*E/-HI-*F*+G` (only 7 operators for 9 operands — one short). The evaluation table below was already using the correct 8-operator expression, which is why it evaluates to 39.
 
 
 
